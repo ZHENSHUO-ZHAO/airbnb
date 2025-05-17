@@ -5,6 +5,7 @@ import {
   clientCollection,
 } from "../const.js";
 import { ObjectId } from "mongodb";
+import { convertDecimalObjects } from "../utils.js";
 
 const router = express.Router();
 
@@ -143,7 +144,7 @@ router.get("/myBookings", async (req, res) => {
       .find({ "clientDetails.clientID": new ObjectId(clientId) })
       .toArray();
 
-    res.json(bookings);
+    res.json(bookings.map(convertDecimalObjects));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

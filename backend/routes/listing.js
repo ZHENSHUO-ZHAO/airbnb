@@ -1,5 +1,6 @@
 import express from "express";
 import { listingCollection } from "../const.js";
+import { convertDecimalObjects } from "../utils.js";
 
 const router = express.Router();
 const projection = {
@@ -16,7 +17,7 @@ router.get("/randomListing", async (req, res) => {
       .aggregate([{ $sample: { size: 5 } }, { $project: projection }])
       .toArray();
 
-    res.json(listings);
+    res.json(listings.map(convertDecimalObjects));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -47,7 +48,7 @@ router.get("/searchListing", async (req, res) => {
       .find(query, { projection })
       .toArray();
 
-    res.json(listings);
+    res.json(listings.map(convertDecimalObjects));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

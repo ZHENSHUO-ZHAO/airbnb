@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.two-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;       /* limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow-y: auto;            /* enable vertical scroll if content overflows */
+  min-height: 2.4em;           /* 2 lines height (adjust with your line-height) */
+  line-height: 1.2em;          /* line height */
+  word-break: break-word;      /* optional, break long words */
+}
+
+@keyframes flash-red-outline {
+  0%, 100% {
+    outline: 4px solid transparent;
+  }
+  25%, 75% {
+    outline: 4px solid rgba(255, 92, 80, 0.814);
+  }
+  50% {
+    outline: 4px solid transparent;
+  }
+}
+
+.flash-red-outline {
+  animation: flash-red-outline 1s ease-in-out 2;
+}
