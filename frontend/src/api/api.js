@@ -19,3 +19,12 @@ export const searchListings = async (params) => {
     return { data: null, error };
   }
 };
+
+export const makeBooking = async (bookingData) => {
+  try {
+    const res = await axios.post(`${BASE_URL}makeBooking`, bookingData);
+    return { data: res.data, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+};

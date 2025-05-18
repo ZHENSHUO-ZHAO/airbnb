@@ -10,7 +10,9 @@ export default function Listings({ listings, hasSearched }) {
           ? `${listings.length} Listing${
               listings.length === 1 ? "" : "s"
             } that match${listings.length === 1 ? "es" : ""} your preferences`
-          : "Listings"}
+          : `${listings.length} Recommended Listing${
+              listings.length === 1 ? "" : "s"
+            }`}
       </h3>
 
       {listings.length === 0 ? (

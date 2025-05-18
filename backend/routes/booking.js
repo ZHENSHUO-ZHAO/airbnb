@@ -4,7 +4,7 @@ import {
   listingCollection,
   clientCollection,
 } from "../const.js";
-import { ObjectId } from "mongodb";
+import { ObjectId, Decimal128 } from "mongodb";
 import { convertDecimalObjects } from "../utils.js";
 
 const router = express.Router();
@@ -39,10 +39,22 @@ router.post("/makeBooking", async (req, res) => {
         return res.status(400).json({ error: "Missing required fields." });
       }
 
+      // Validate that endDate is at least one day after startDate
+      const checkInDate = new Date(startDate);
+      const checkOutDate = new Date(endDate);
+      const oneDayMs = 24 * 60 * 60 * 1000;
+
+      if (checkOutDate.getTime() - checkInDate.getTime() < oneDayMs) {
+        await session.abortTransaction();
+        return res
+          .status(400)
+          .json({ error: "Check Out date must be after Check In date." });
+      }
+
       const balanceDueDate = new Date(
         new Date(startDate).getTime() - 1 * 24 * 60 * 60 * 1000
       );
-      const depositPaid = 0;
+      const depositPaid = Decimal128.fromString("0");
       const numGuests = 0;
       const guestList = [];
 
@@ -83,11 +95,14 @@ router.post("/makeBooking", async (req, res) => {
         : 0;
 
       const baseCost = (price + extraPeopleFee) * nights;
-      const balanceAmountDue = baseCost + cleaning + security - depositPaid;
+      const balanceAmountDue = Decimal128.fromString(
+        (baseCost + cleaning + security).toFixed(2)
+      );
 
       const booking = {
         startDate: new Date(startDate),
         endDate: new Date(endDate),
+        bookingDate: new Date(),
         depositPaid,
         balanceAmountDue,
         balanceDueDate: new Date(balanceDueDate),

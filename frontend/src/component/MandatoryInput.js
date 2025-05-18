@@ -1,36 +1,41 @@
 import React, { useEffect, useState } from "react";
 
-export default function MandatoryTextInput({
+export default function MandatoryInput({
   label,
   value,
   onChange,
-  isInvalid,
   className = "",
   placeholder = "",
+  inputType = "text",
+  inputMode = "",
+  invalidMessage = "",
 }) {
   const [flash, setFlash] = useState(false);
 
   useEffect(() => {
-    if (isInvalid) {
+    if (invalidMessage) {
       setFlash(true);
       const timer = setTimeout(() => setFlash(false), 2000);
       return () => clearTimeout(timer);
     }
-  }, [isInvalid]);
+  }, [invalidMessage]);
 
   return (
     <div className={`${className} d-flex flex-column`}>
       <label className="form-label">{label} *</label>
       <input
-        type="text"
+        type={inputType}
+        {...(inputMode && { inputMode })}
         className={`form-control ${flash ? "flash-red-outline" : ""} ${
-          isInvalid ? "is-invalid" : ""
+          invalidMessage ? "is-invalid" : ""
         }`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
       />
-      <div className="invalid-feedback">{label} is required.</div>
+      {invalidMessage && (
+        <div className="invalid-feedback">{invalidMessage}</div>
+      )}
     </div>
   );
 }

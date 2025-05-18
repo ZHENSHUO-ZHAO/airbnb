@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { getRandomListings, searchListings } from "../api/api";
 import Dropdown from "../component/Dropdown";
-import MandatoryTextInput from "../component/MandatoryTextInput";
+import MandatoryInput from "../component/MandatoryInput";
 import { ToastContext } from "../App";
 import Listings from "../component/Listings";
 
@@ -37,7 +37,7 @@ export default function Home() {
   const [bedrooms, setBedrooms] = useState("");
   const [listings, setListings] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
-  const [locationInvalid, setLocationInvalid] = useState(false);
+  const [locationError, setLocationError] = useState("");
 
   // Fetch random listings on initial load
   useEffect(() => {
@@ -52,10 +52,10 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!location.trim()) {
-      setLocationInvalid(true);
+      setLocationError("Location is required.");
       return;
     } else {
-      setLocationInvalid(false);
+      setLocationError("");
     }
 
     const params = {
@@ -76,11 +76,11 @@ export default function Home() {
       <h2 className="mb-3">Search Listings</h2>
 
       <form className="row g-3 mb-4 align-items-start" onSubmit={handleSubmit}>
-        <MandatoryTextInput
+        <MandatoryInput
           label="Location"
           value={location}
           onChange={setLocation}
-          isInvalid={locationInvalid}
+          invalidMessage={locationError}
           className="col-md-3 d-flex flex-column"
         />
 
