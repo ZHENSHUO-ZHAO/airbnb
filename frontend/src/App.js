@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext, useState } from "react";
-import Home from "./component/Home";
-import Booking from "./component/Booking";
-import Complete from "./component/Complete";
+import HomePage from "./page/HomePage";
+import BookingPage from "./page/BookingPage";
+import CompletePage from "./page/CompletePage";
 
 export const ToastContext = createContext();
 
@@ -20,9 +20,9 @@ function App() {
     <ToastContext.Provider value={{ triggerToast }}>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/listing/:id" element={<Booking />} />
-          <Route path="/complete" element={<Complete />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/booking/:id" element={<BookingPage />} />
+          <Route path="/complete" element={<CompletePage />} />
         </Routes>
         {showToast && (
           <div
