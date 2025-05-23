@@ -28,7 +28,13 @@ export default function Listings({ listings, hasSearched }) {
             const listing = listings[index];
             return (
               <div style={{ ...style }}>
-                <div className="card m-2">
+                <div
+                  className="card m-2 shadow-md"
+                  style={{
+                    border: "2px solid rgba(0, 152, 198, 0.32)",
+                    boxShadow: "inset 0 0 8px 3px rgba(0, 195, 255, 0.37)",
+                  }}
+                >
                   <div className="card-body">
                     <h5 className="card-title">
                       <Link

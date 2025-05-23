@@ -51,6 +51,25 @@ router.post("/makeBooking", async (req, res) => {
           .json({ error: "Check Out date must be after Check In date." });
       }
 
+      // Check for overlapping bookings
+      const overlapping = await db.collection(bookingCollection).findOne(
+        {
+          "listingDetails.listingID": listingID,
+          startDate: { $lt: new Date(endDate) },
+          endDate: { $gt: new Date(startDate) },
+        },
+        { session }
+      );
+
+      if (overlapping) {
+        await session.abortTransaction();
+        return res
+          .status(409)
+          .json({
+            error: "Selected dates are already booked for this listing.",
+          });
+      }
+
       const balanceDueDate = new Date(
         new Date(startDate).getTime() - 1 * 24 * 60 * 60 * 1000
       );

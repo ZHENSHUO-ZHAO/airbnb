@@ -107,7 +107,7 @@ export default function BookingPage() {
         if (error) {
           triggerToast(error.response?.data?.error || "Booking failed.");
         } else {
-          navigate("/complete");
+          navigate(`/complete/${data.bookingId}`);
         }
       });
     }

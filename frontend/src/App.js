@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/booking/:id" element={<BookingPage />} />
-          <Route path="/complete" element={<CompletePage />} />
+          <Route path="/complete/:id" element={<CompletePage />} />
         </Routes>
         {showToast && (
           <div
