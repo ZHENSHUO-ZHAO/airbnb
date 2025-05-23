@@ -45,6 +45,7 @@ List of libraries used in the frontend.
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.6",
+    "canvas-confetti": "^1.9.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0",
