@@ -6,11 +6,10 @@ import { useEffect } from "react";
 export default function CompletePage() {
   const { id } = useParams();
   useEffect(() => {
-    // simple burst
     confetti({
       particleCount: 150,
       spread: 70,
-      origin: { y: 0.6 }
+      origin: { y: 0.5 }
     });
   }, []);
 
