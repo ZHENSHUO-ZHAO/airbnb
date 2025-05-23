@@ -26,28 +26,40 @@ export default function BookingPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     let valid = true;
+    let checkInDate, checkOutDate = null;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     if (!checkIn.trim()) {
       setCheckInError("Check-in date is required.");
       valid = false;
     } else {
-      setCheckInError("");
+      checkInDate = new Date(checkIn);
+      if (checkInDate < today) {
+        setCheckInError("Check In date cannot be earlier than today.");
+        valid = false;
+      } else {
+        setCheckInError("");
+      }
     }
 
     if (!checkOut.trim()) {
       setCheckOutError("Check-out date is required.");
       valid = false;
     } else {
-      setCheckOutError("");
+      checkOutDate = new Date(checkOut);
+      if (checkOutDate < today) {
+        setCheckOutError("Check Out date cannot be earlier than today.");
+        valid = false;
+      } else {
+        setCheckOutError("");
+      }
     }
 
-    if (checkIn.trim() && checkOut.trim()) {
-      const checkInDate = new Date(checkIn);
-      const checkOutDate = new Date(checkOut);
-      if (checkOutDate <= checkInDate) {
-        valid = false;
-        setCheckOutError("Check Out date must be after Check In date.");
-      }
+    if (checkInDate && checkOutDate && checkOutDate <= checkInDate) {
+      setCheckOutError("Check Out date must be after Check In date.");
+      valid = false;
     }
 
     if (!name.trim()) {
