@@ -38,7 +38,9 @@ export default function Listings({ listings, hasSearched }) {
                   <div className="card-body">
                     <h5 className="card-title">
                       <Link
-                        to={`/booking/${listing._id}`}
+                        to={`/booking/${
+                          listing._id
+                        }?listingName=${encodeURIComponent(listing.name)}`}
                         className="text-decoration-none text-primary"
                       >
                         {listing.name}

@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
 import MandatoryInput from "../component/MandatoryInput";
 import { ToastContext } from "../App";
 import { makeBooking } from "../api/api";
@@ -7,7 +7,21 @@ import { makeBooking } from "../api/api";
 export default function BookingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { triggerToast } = useContext(ToastContext);
+
+  // State for listingName
+  const [listingName, setListingName] = useState(location.state?.listingName || "");
+
+  useEffect(() => {
+    if (!listingName) {
+      const params = new URLSearchParams(location.search);
+      const nameFromQuery = params.get("listingName");
+      if (nameFromQuery) {
+        setListingName(nameFromQuery);
+      }
+    }
+  }, [location.search, listingName]);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -115,7 +129,17 @@ export default function BookingPage() {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Booking for Listing ID: {id}</h2>
+      <h2 className="mb-4">
+        Book the Property
+        <br />
+        <span className="text-success">Listing ID: {id}</span>
+        {listingName && (
+          <>
+            <br />
+            <span className="text-success">Name: {listingName}</span>
+          </>
+        )}
+      </h2>
       <form onSubmit={handleSubmit}>
         <h4 className="text-primary">Booking Details</h4>
         <div className="row mb-3">
