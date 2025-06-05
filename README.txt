@@ -8,14 +8,14 @@ If you have the Docker installed on your computer, this is the convenient way. M
 1. Navigate to the root_folder of this project. 
     CD [root_folder]
 2. Run the below command to build the docker containers with one for the frontend and another for the backend
-    docker-compose up --build -d
+    docker compose up --build -d
 3. Use the below command to stop the containers if you start containers using build command in step 2.
-    docker-compose down
+    docker compose down
    Use Ctrl+c to stop the containers if you start containers using up command in step 4. 
 4. Use the below command to start the containers you have stopped
-    docker-compose up
+    docker compose up
 5. Once you finish testing and want to delete all the containers, images and volumes, use the below command.
-    docker-compose down --rmi all -v
+    docker compose down --rmi all -v
 
 Option 2 - Manual Setup
 1. Navigate to the backend folder of this project.
